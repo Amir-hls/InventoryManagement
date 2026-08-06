@@ -57,7 +57,7 @@ namespace Infrastructure.Data.Configurations
         public void Configure(EntityTypeBuilder<OrderItem> builder)
         {
             builder.HasKey(oi => oi.Id);
-            builder.Property(oi => oi.UnitPrice).HasPrecision(18, 2);
+            builder.Property(oi => oi.UnitPrice).HasPrecision(10, 2);
 
             builder.HasOne(oi => oi.Order)
                    .WithMany(o => o.OrderItems)
@@ -85,6 +85,28 @@ namespace Infrastructure.Data.Configurations
                 new OrderStatus { Id = 4, Code = "DELIVERED", DisplayName = "Delivered" },
                 new OrderStatus { Id = 5, Code = "CANCELLED", DisplayName = "Cancelled" }
             );
+        }
+    }
+
+    public class WarehouseConfiguration : IEntityTypeConfiguration<Warehouse>
+    {
+        public void Configure(EntityTypeBuilder<Warehouse> builder)
+        {
+            builder.HasKey(w => w.Id);
+            builder.Property(w => w.Name).HasMaxLength(100).IsRequired();
+            builder.Property(w => w.Address).HasMaxLength(255);
+        }
+    }
+    public class WarehouseStockConfiguration : IEntityTypeConfiguration<WarehouseStock>
+    {
+        public void Configure(EntityTypeBuilder<WarehouseStock> builder)
+        {
+            builder.HasKey(ws => new { ws.WarehouseId, ws.ProductId });
+            builder.HasOne(ws => ws.Warehouse).WithMany(w => w.WarehouseStocks)
+                .HasForeignKey(ws => ws.WarehouseId);
+
+            builder.HasOne(ws => ws.Product).WithMany(p => p.WarehouseStocks)
+                .HasForeignKey(ws => ws.ProductId);
         }
     }
 }
