@@ -22,68 +22,69 @@ namespace Infrastructure.Data.Configurations
                    .OnDelete(DeleteBehavior.Restrict);
         }
     }
-}
 
-// Infrastructure/Data/Configurations/ProductConfiguration.cs
-public class ProductConfiguration : IEntityTypeConfiguration<Product>
-{
-    public void Configure(EntityTypeBuilder<Product> builder)
+
+    // Infrastructure/Data/Configurations/ProductConfiguration.cs
+    public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
-        builder.HasKey(p => p.Id);
-        builder.HasIndex(p => p.Sku).IsUnique();
-        builder.Property(p => p.Name).HasMaxLength(100).IsRequired();
-        builder.Property(p => p.UnitPrice).HasPrecision(10, 2);
+        public void Configure(EntityTypeBuilder<Product> builder)
+        {
+            builder.HasKey(p => p.Id);
+            builder.HasIndex(p => p.Sku).IsUnique();
+            builder.Property(p => p.Name).HasMaxLength(100).IsRequired();
+            builder.Property(p => p.UnitPrice).HasPrecision(10, 2);
+        }
     }
-}
 
-// Infrastructure/Data/Configurations/OrderConfiguration.cs
-public class OrderConfiguration : IEntityTypeConfiguration<Order>
-{
-    public void Configure(EntityTypeBuilder<Order> builder)
+    // Infrastructure/Data/Configurations/OrderConfiguration.cs
+    public class OrderConfiguration : IEntityTypeConfiguration<Order>
     {
-        builder.HasKey(o => o.Id);
-        builder.HasIndex(o => o.OrderNumber).IsUnique();
+        public void Configure(EntityTypeBuilder<Order> builder)
+        {
+            builder.HasKey(o => o.Id);
+            builder.HasIndex(o => o.OrderNumber).IsUnique();
 
-        builder.HasOne(o => o.OrderStatus)
-               .WithMany(os => os.Orders)
-               .HasForeignKey(o => o.OrderStatusId)
-               .OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(o => o.OrderStatus)
+                   .WithMany(os => os.Orders)
+                   .HasForeignKey(o => o.OrderStatusId)
+                   .OnDelete(DeleteBehavior.Restrict);
+        }
     }
-}
 
-// Infrastructure/Data/Configurations/OrderItemConfiguration.cs
-public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
-{
-    public void Configure(EntityTypeBuilder<OrderItem> builder)
+    // Infrastructure/Data/Configurations/OrderItemConfiguration.cs
+    public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
     {
-        builder.HasKey(oi => oi.Id);
-        builder.Property(oi => oi.UnitPrice).HasPrecision(18, 2);
+        public void Configure(EntityTypeBuilder<OrderItem> builder)
+        {
+            builder.HasKey(oi => oi.Id);
+            builder.Property(oi => oi.UnitPrice).HasPrecision(18, 2);
 
-        builder.HasOne(oi => oi.Order)
-               .WithMany(o => o.OrderItems)
-               .HasForeignKey(oi => oi.OrderId)
-               .OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(oi => oi.Order)
+                   .WithMany(o => o.OrderItems)
+                   .HasForeignKey(oi => oi.OrderId)
+                   .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(oi => oi.Product)
-               .WithMany(p => p.OrderItems)
-               .HasForeignKey(oi => oi.ProductId)
-               .OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(oi => oi.Product)
+                   .WithMany(p => p.OrderItems)
+                   .HasForeignKey(oi => oi.ProductId)
+                   .OnDelete(DeleteBehavior.Restrict);
+        }
     }
-}
 
-public class OrderStatusConfiguration : IEntityTypeConfiguration<OrderStatus>
-{
-    public void Configure(EntityTypeBuilder<OrderStatus> builder)
+    public class OrderStatusConfiguration : IEntityTypeConfiguration<OrderStatus>
     {
-        builder.HasKey(os => os.Id);
-        builder.Property(os => os.Code).HasMaxLength(30).IsRequired();
+        public void Configure(EntityTypeBuilder<OrderStatus> builder)
+        {
+            builder.HasKey(os => os.Id);
+            builder.Property(os => os.Code).HasMaxLength(30).IsRequired();
 
-        builder.HasData(
-            new OrderStatus { Id = 1, Code = "PENDING", DisplayName = "Pending Processing" },
-            new OrderStatus { Id = 2, Code = "PROCESSING", DisplayName = "In Fulfillment" },
-            new OrderStatus { Id = 3, Code = "SHIPPED", DisplayName = "Shipped" },
-            new OrderStatus { Id = 4, Code = "DELIVERED", DisplayName = "Delivered" },
-            new OrderStatus { Id = 5, Code = "CANCELLED", DisplayName = "Cancelled" }
-        );
+            builder.HasData(
+                new OrderStatus { Id = 1, Code = "PENDING", DisplayName = "Pending Processing" },
+                new OrderStatus { Id = 2, Code = "PROCESSING", DisplayName = "In Fulfillment" },
+                new OrderStatus { Id = 3, Code = "SHIPPED", DisplayName = "Shipped" },
+                new OrderStatus { Id = 4, Code = "DELIVERED", DisplayName = "Delivered" },
+                new OrderStatus { Id = 5, Code = "CANCELLED", DisplayName = "Cancelled" }
+            );
+        }
     }
 }
