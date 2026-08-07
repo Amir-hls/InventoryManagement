@@ -1,14 +1,28 @@
+using Application.IServices;
+using Application.Services;
 using Infrastructure.Data;
+using Infrastructure.IRepository;
+using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var defaultConnectionString = builder.Configuration
+    .GetConnectionString("DefaultConnectionString");
+
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.
-        GetConnectionString("DefaultConnectionString"));
+    options.UseNpgsql(defaultConnectionString);
         
 });
+
+builder.Services.AddSingleton<ISqlConnectionFactory>(provider
+    => new SqlConnectionFactory(defaultConnectionString));
+builder.Services.AddScoped<ICustomerCommandRepository, CustomerCommandRepository>();
+builder.Services.AddScoped<ICustomerQueryRepository, CustomerQueryRepository>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

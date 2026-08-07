@@ -1,5 +1,6 @@
 ﻿using Infrastructure.IRepository;
 using Microsoft.Data.SqlClient;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,7 +18,7 @@ namespace Infrastructure.Repository
 
         public IDbConnection CreateConnection(string connectionString)
         {
-            return new SqlConnection(connectionString);
+            return new NpgsqlConnection(connectionString);
         }
     }
 }

@@ -11,8 +11,10 @@ namespace Infrastructure.Data.Configurations
         {
             builder.HasKey(c => c.Id);
             builder.HasIndex(c => c.TaxNumber).IsUnique();
+            builder.Property(c => c.TaxNumber).HasMaxLength(50).IsRequired();
             builder.Property(c => c.Name).HasMaxLength(100).IsRequired();
-            builder.Property(c => c.ContactEmail).HasMaxLength(50).IsRequired();
+            builder.Property(c => c.ContactEmail).HasMaxLength(100).IsRequired();
+            builder.Property(c => c.PhoneNumber).HasMaxLength(20).IsRequired();
             builder.Property(c => c.CompanyName).HasMaxLength(100);
 
             // Relationships
@@ -22,7 +24,6 @@ namespace Infrastructure.Data.Configurations
                    .OnDelete(DeleteBehavior.Restrict);
         }
     }
-
 
     // Infrastructure/Data/Configurations/ProductConfiguration.cs
     public class ProductConfiguration : IEntityTypeConfiguration<Product>
