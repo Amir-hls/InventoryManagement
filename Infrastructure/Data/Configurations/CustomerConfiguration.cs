@@ -101,12 +101,13 @@ namespace Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<WarehouseStock> builder)
         {
-            builder.HasKey(ws => new { ws.WarehouseId, ws.ProductId });
+            builder.HasKey(ws => ws.Id);
+            builder.HasIndex(ws => new { ws.WarehouseId, ws.ProductId }).IsUnique();
             builder.HasOne(ws => ws.Warehouse).WithMany(w => w.WarehouseStocks)
-                .HasForeignKey(ws => ws.WarehouseId);
+                .HasForeignKey(ws => ws.WarehouseId).OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(ws => ws.Product).WithMany(p => p.WarehouseStocks)
-                .HasForeignKey(ws => ws.ProductId);
+                .HasForeignKey(ws => ws.ProductId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
