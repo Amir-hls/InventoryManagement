@@ -21,5 +21,10 @@ namespace Application.Services
             Customer newCustomer = addCustomerDto.Adapt<Customer>();
             await _customerCommand.InsertCustomer(newCustomer);
         }
+
+        public Task UpdateCustomer(UpdateCustomerDto updateCustomerDto)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

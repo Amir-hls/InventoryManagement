@@ -8,5 +8,6 @@ namespace Application.IServices
     public interface ICustomerService
     {
         Task AddCustomer(AddCustomerDto addCustomerDto);
+        Task UpdateCustomer(UpdateCustomerDto updateCustomerDto);
     }
 }

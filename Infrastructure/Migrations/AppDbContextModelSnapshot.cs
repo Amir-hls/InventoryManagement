@@ -24,11 +24,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Customer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("CompanyName")
                         .IsRequired()
@@ -64,18 +62,38 @@ namespace Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("11111111-1111-1111-1111-111111111111"),
+                            CompanyName = "Tech Solutions B.V.",
+                            ContactEmail = "alice@techsolutions.nl",
+                            CreatedAt = new DateTime(2026, 8, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Name = "Alice Tech",
+                            PhoneNumber = "+31612345678",
+                            TaxNumber = "NL812345678B01"
+                        },
+                        new
+                        {
+                            Id = new Guid("22222222-2222-2222-2222-222222222222"),
+                            CompanyName = "Fast Freight GmbH",
+                            ContactEmail = "bob@fastfreight.de",
+                            CreatedAt = new DateTime(2026, 8, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Name = "Bob Logistics",
+                            PhoneNumber = "+31687654321",
+                            TaxNumber = "DE123456789"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Order", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("timestamp with time zone");
@@ -97,21 +115,29 @@ namespace Infrastructure.Migrations
                     b.HasIndex("OrderStatusId");
 
                     b.ToTable("Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("66666666-6666-6666-6666-666666666666"),
+                            CustomerId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            OrderDate = new DateTime(2026, 8, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            OrderNumber = "ORD-2026-001",
+                            OrderStatusId = 1
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.OrderItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
@@ -127,6 +153,24 @@ namespace Infrastructure.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("OrderItems");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("77777777-7777-7777-7777-777777777777"),
+                            OrderId = new Guid("66666666-6666-6666-6666-666666666666"),
+                            ProductId = new Guid("33333333-3333-3333-3333-333333333333"),
+                            Quantity = 5,
+                            UnitPrice = 599.99m
+                        },
+                        new
+                        {
+                            Id = new Guid("88888888-8888-8888-8888-888888888888"),
+                            OrderId = new Guid("66666666-6666-6666-6666-666666666666"),
+                            ProductId = new Guid("44444444-4444-4444-4444-444444444444"),
+                            Quantity = 2,
+                            UnitPrice = 1599.99m
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.OrderStatus", b =>
@@ -185,11 +229,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Product", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -210,15 +252,29 @@ namespace Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-333333333333"),
+                            Name = "Intel Core i9-14900K",
+                            Sku = "CPU-INT-i9",
+                            UnitPrice = 599.99m
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-444444444444"),
+                            Name = "NVIDIA RTX 4090",
+                            Sku = "GPU-NV-4090",
+                            UnitPrice = 1599.99m
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Warehouse", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Address")
                         .HasMaxLength(255)
@@ -235,6 +291,15 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Warehouse");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("55555555-5555-5555-5555-555555555555"),
+                            Address = "123 Logistics Way, Amsterdam",
+                            MaxCapacity = 10000,
+                            Name = "Central Europe Hub"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.WarehouseStock", b =>
@@ -245,14 +310,14 @@ namespace Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("StockQuantity")
                         .HasColumnType("integer");
 
-                    b.Property<int>("WarehouseId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("WarehouseId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -262,6 +327,22 @@ namespace Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("WarehouseStock");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ProductId = new Guid("33333333-3333-3333-3333-333333333333"),
+                            StockQuantity = 150,
+                            WarehouseId = new Guid("55555555-5555-5555-5555-555555555555")
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ProductId = new Guid("44444444-4444-4444-4444-444444444444"),
+                            StockQuantity = 45,
+                            WarehouseId = new Guid("55555555-5555-5555-5555-555555555555")
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Order", b =>
