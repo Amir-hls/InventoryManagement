@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Domain.DTOs
+namespace Domain.DTOs.Customer
 {
     public class UpdateCustomerDto
     {

@@ -16,9 +16,9 @@ namespace Infrastructure.Repository
             _connnectionString = connnectionString;
         }
 
-        public IDbConnection CreateConnection(string connectionString)
+        public IDbConnection CreateConnection()
         {
-            return new NpgsqlConnection(connectionString);
+            return new NpgsqlConnection(_connnectionString);
         }
     }
 }
