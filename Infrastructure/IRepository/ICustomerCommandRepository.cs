@@ -10,5 +10,6 @@ namespace Infrastructure.IRepository
     {
         Task InsertCustomer(Customer customer);
         Task UpdateCustomer(Customer customer);
+        Task DeleteCustomer(Guid customerId);
     }
 }

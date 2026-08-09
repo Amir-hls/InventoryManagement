@@ -7,6 +7,6 @@ namespace Infrastructure.IRepository
 {
     public interface ISqlConnectionFactory
     {
-        IDbConnection CreateConnection(string connectionString);
+        IDbConnection CreateConnection();
     }
 }

@@ -22,9 +22,19 @@ namespace Infrastructure.Repository
             await _dbContext.SaveChangesAsync();
         }
 
-        public Task UpdateCustomer(Customer customer)
+        public async Task UpdateCustomer(Customer customer)
         {
-            throw new NotImplementedException();
+            _dbContext.Update<Customer>(customer);
+            await _dbContext.SaveChangesAsync();
+        }
+        public async Task DeleteCustomer(Guid customerId) {
+            var existingCustomer = await _dbContext.FindAsync<Customer>(customerId);
+            if(existingCustomer != null)
+            {
+                _dbContext.Remove<Customer>(existingCustomer);
+                await _dbContext.SaveChangesAsync();
+            }
+            
         }
     }
 }
