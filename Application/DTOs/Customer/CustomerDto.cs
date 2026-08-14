@@ -1,10 +1,10 @@
-﻿using Domain.DTOs.Order;
+﻿using Application.DTOs.Order;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Domain.DTOs.Customer
+namespace Application.DTOs.Customer
 {
     public class CustomerDto
     {
@@ -14,6 +14,6 @@ namespace Domain.DTOs.Customer
         public string CompanyName { get; set; } = string.Empty;
         public string ContactEmail { get; set; } = string.Empty;
         public string TaxNumber { get; set; } = string.Empty;
-        public List<CustomerOrderDto> Orders { get; set; } = new();
+        public List<OrderSummaryDto> Orders { get; set; } = new();
     }
 }
