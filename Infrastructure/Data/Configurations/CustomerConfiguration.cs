@@ -15,7 +15,7 @@ namespace Infrastructure.Data.Configurations
             builder.Property(c => c.Name).HasMaxLength(100).IsRequired();
             builder.Property(c => c.ContactEmail).HasMaxLength(100).IsRequired();
             builder.Property(c => c.PhoneNumber).HasMaxLength(20).IsRequired();
-            builder.Property(c => c.CompanyName).HasMaxLength(100);
+            builder.Property(c => c.CompanyName).HasMaxLength(100).HasDefaultValue(string.Empty);
 
             // Relationships
             builder.HasMany(c => c.Orders)

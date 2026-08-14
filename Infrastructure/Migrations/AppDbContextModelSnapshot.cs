@@ -31,8 +31,10 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("CompanyName")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)")
+                        .HasDefaultValue("")
                         .HasColumnName("company_name");
 
                     b.Property<string>("ContactEmail")

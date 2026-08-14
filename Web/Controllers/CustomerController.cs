@@ -20,5 +20,13 @@ namespace Web.Controllers
                 await  _customerService.GetAllCustomersAsync();
             return Json(new {customers});
         }
+        [HttpPost("InsertCustomer")]
+        public async Task<IActionResult> InsertCustomer(AddCustomerDto addCustomerDto)
+        {
+            Guid newCustomerId = await _customerService.InsertCustomer(addCustomerDto);
+            if (newCustomerId == Guid.Empty)
+                return BadRequest(ModelState);
+            return Ok(newCustomerId);
+        }
     }
 }
