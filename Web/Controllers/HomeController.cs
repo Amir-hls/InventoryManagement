@@ -4,6 +4,7 @@ using Web.Models;
 
 namespace Web.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi =true)]
     public class HomeController : Controller
     {
         public IActionResult Index()

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Domain.DTOs.Customer
+namespace Application.DTOs.Customer
 {
     public class UpdateCustomerDto
     {
@@ -17,7 +17,7 @@ namespace Domain.DTOs.Customer
         [Required]
         [MaxLength(50)]
         [EmailAddress]
-        public string? Email { get; set; }
+        public string? ContactEmail { get; set; }
         [Required]
         [MaxLength(20)]
         [Phone]

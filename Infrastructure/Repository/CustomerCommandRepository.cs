@@ -1,7 +1,6 @@
-﻿using Domain.DTOs;
+﻿using Application.IRepository;
 using Domain.Entities;
 using Infrastructure.Data;
-using Infrastructure.IRepository;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,25 +15,33 @@ namespace Infrastructure.Repository
             _dbContext = dbContext;
         }
 
-        public async Task InsertCustomer(Customer customer)
+        public async Task<Guid> InsertCustomer(Customer customer)
         {
-            await _dbContext.AddAsync<Customer>(customer);
+            await _dbContext.AddAsync(customer);
             await _dbContext.SaveChangesAsync();
+            return customer.Id;
         }
 
         public async Task UpdateCustomer(Customer customer)
-        {
-            _dbContext.Update<Customer>(customer);
+        {  
+            _dbContext.Update(customer);
             await _dbContext.SaveChangesAsync();
         }
-        public async Task DeleteCustomer(Guid customerId) {
+        public async Task<bool> DeleteCustomer(Guid customerId) {
             var existingCustomer = await _dbContext.FindAsync<Customer>(customerId);
-            if(existingCustomer != null)
-            {
-                _dbContext.Remove<Customer>(existingCustomer);
-                await _dbContext.SaveChangesAsync();
-            }
-            
+            if (existingCustomer == null)
+                return false;
+                
+            _dbContext.Remove(existingCustomer);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<Customer?> GetCustomerEntityAsync(Guid customerId)
+        {
+            var existingCustomer = await _dbContext.FindAsync<Customer>(customerId);
+            return existingCustomer;
         }
     }
 }

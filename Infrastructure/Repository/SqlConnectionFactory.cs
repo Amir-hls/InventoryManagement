@@ -1,4 +1,4 @@
-﻿using Infrastructure.IRepository;
+﻿using Application.IRepository;
 using Microsoft.Data.SqlClient;
 using Npgsql;
 using System;
