@@ -23,7 +23,9 @@ builder.Services.AddSingleton<ISqlConnectionFactory>(provider
     => new SqlConnectionFactory(defaultConnectionString));
 builder.Services.AddScoped<ICustomerCommandRepository, CustomerCommandRepository>();
 builder.Services.AddScoped<ICustomerQueryRepository, CustomerQueryRepository>();
+builder.Services.AddScoped<IProductCommandRepository, ProductCommandRepository>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 
 // Add services to the container.
