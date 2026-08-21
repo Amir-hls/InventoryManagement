@@ -7,13 +7,8 @@ using System.Text;
 
 namespace Infrastructure.Repository
 {
-    public class CustomerCommandRepository : ICustomerCommandRepository
+    public class CustomerCommandRepository(AppDbContext _dbContext) : ICustomerCommandRepository
     {
-        private readonly AppDbContext _dbContext;
-        public CustomerCommandRepository(AppDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
 
         public async Task<Guid> InsertCustomer(Customer customer)
         {
