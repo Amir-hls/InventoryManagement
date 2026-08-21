@@ -10,5 +10,6 @@ namespace Application.IServices
         Task<Guid> InsertProduct(AddProductDto addProductDto);
         Task<bool> UpdateProduct(UpdateProductDto updateProductDto);
         Task<bool> DeleteProduct(Guid productId);
+        Task<IEnumerable<ProductDto>> GetAllProducts();
     }
 }
