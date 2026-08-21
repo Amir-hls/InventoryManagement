@@ -12,14 +12,14 @@ namespace Infrastructure.Repository
 
         public async Task<bool> DeleteProduct(Guid productId)
         {
-            Product? existingProduct = await GetProductAsync(productId);
+            Product? existingProduct = await GetProductEntityAsync(productId);
             if (existingProduct == null) return false;
             dbContext.Remove(existingProduct);
             await dbContext.SaveChangesAsync();
             return true;
         }
 
-        public async Task<Product?> GetProductAsync(Guid productId)
+        public async Task<Product?> GetProductEntityAsync(Guid productId)
         {
             Product? existingProduct = await dbContext.FindAsync<Product>(productId);
             return existingProduct;

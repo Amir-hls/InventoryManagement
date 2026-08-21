@@ -10,7 +10,7 @@ namespace Application.IRepository
         Task<Guid> InsertProduct(Product product);
         Task UpdateProduct(Product product);
         Task<bool> DeleteProduct(Guid productId);
-        Task<Product?> GetProductAsync(Guid productId);
+        Task<Product?> GetProductEntityAsync(Guid productId);
 
     }
 }

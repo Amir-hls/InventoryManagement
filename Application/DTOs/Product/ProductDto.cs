@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Application.DTOs.WarehouseStock;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -11,5 +12,9 @@ namespace Application.DTOs.Product
         public string Sku { get; set; } = null!;
         public string Name { get; set; } = null!;
         public decimal UnitPrice { get; set; }
+        public IEnumerable<StockDto>? StockDtos { get; set; }
+
+
+
     }
 }

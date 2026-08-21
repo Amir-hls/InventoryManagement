@@ -23,6 +23,7 @@ namespace Web.Controllers
         [HttpPost("InsertCustomer")]
         public async Task<IActionResult> InsertCustomer(AddCustomerDto addCustomerDto)
         {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
             Guid newCustomerId = await _customerService.InsertCustomer(addCustomerDto);
             if (newCustomerId == Guid.Empty)
                 return BadRequest(ModelState);
