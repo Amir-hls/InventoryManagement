@@ -6,28 +6,13 @@ using Infrastructure.Data;
 using Infrastructure.Repository;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using Web.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
 TypeAdapterConfig.GlobalSettings.Scan(typeof(MapsterConfiguration).Assembly);
-var defaultConnectionString = builder.Configuration
-    .GetConnectionString("DefaultConnectionString");
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    options.UseNpgsql(defaultConnectionString)
-    .UseSnakeCaseNamingConvention();
-        
-});
-
-builder.Services.AddSingleton<ISqlConnectionFactory>(provider
-    => new SqlConnectionFactory(defaultConnectionString));
-builder.Services.AddScoped<ICustomerCommandRepository, CustomerCommandRepository>();
-builder.Services.AddScoped<ICustomerQueryRepository, CustomerQueryRepository>();
-builder.Services.AddScoped<IProductCommandRepository, ProductCommandRepository>();
-builder.Services.AddScoped<IProductQueryRepository, ProductQueryRepository>();
-builder.Services.AddScoped<ICustomerService, CustomerService>();
-builder.Services.AddScoped<IProductService, ProductService>();
-
+var services = builder.Services;
+var configuration = builder.Configuration;
+services.AddServices(configuration);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

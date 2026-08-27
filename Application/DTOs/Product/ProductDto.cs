@@ -12,7 +12,7 @@ namespace Application.DTOs.Product
         public string Sku { get; set; } = null!;
         public string Name { get; set; } = null!;
         public decimal UnitPrice { get; set; }
-        public IEnumerable<StockDto>? StockDtos { get; set; }
+        public List<StockDto>? StockDtos { get; set; }
 
 
 

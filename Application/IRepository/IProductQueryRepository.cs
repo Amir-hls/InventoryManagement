@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.DTOs.Product;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,6 +8,8 @@ namespace Application.IRepository
 {
     public interface IProductQueryRepository
     {
-        Task<IEnumerable<Product>> GetProductsAsync();
+        Task<IEnumerable<ProductDto>> GetProductsAsync();
+        Task<ProductDto?> GetProductByProductIdAsync(Guid productId);
+
     }
 }

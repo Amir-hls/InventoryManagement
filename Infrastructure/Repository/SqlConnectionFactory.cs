@@ -4,6 +4,7 @@ using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Text;
 
 namespace Infrastructure.Repository
@@ -16,7 +17,7 @@ namespace Infrastructure.Repository
             _connnectionString = connnectionString;
         }
 
-        public IDbConnection CreateConnection()
+        public DbConnection CreateConnection()
         {
             return new NpgsqlConnection(_connnectionString);
         }

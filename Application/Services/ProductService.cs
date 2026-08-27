@@ -24,20 +24,12 @@ namespace Application.Services
 
         public async Task<IEnumerable<ProductDto>> GetAllProducts()
         {
-            IEnumerable<Product> products = await queryRepository.GetProductsAsync();
-            return products.Select(p => new ProductDto()
-            {
-                Id = p.Id,
-                Name = p.Name,
-                UnitPrice = p.UnitPrice,
-                Sku = p.Sku,
-                StockDtos = p.WarehouseStocks.Select(st => new StockDto()
-                {
-                    StockQuantity = st.StockQuantity,
-                    WarehouseName = st.Warehouse.Name,
-                    WarehouseAddress = st.Warehouse.Address
-                })
-            });
+            return await queryRepository.GetProductsAsync();
+        }
+
+        public async Task<ProductDto?> GetProductByProductId(Guid productId)
+        {
+            return await queryRepository.GetProductByProductIdAsync(productId);
         }
 
         public async Task<Guid> InsertProduct(AddProductDto addProductDto)
