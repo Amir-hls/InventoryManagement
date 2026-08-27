@@ -8,6 +8,5 @@ namespace Application.DTOs.WarehouseStock
     {
         public int StockQuantity { get; set; }
         public string? WarehouseName { get; set;  }
-        public string? WarehouseAddress { get; set; }
     }
 }

@@ -14,5 +14,13 @@ namespace Web.Controllers
             var products = await productService.GetAllProducts();
             return Ok(products);
         }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> ProductById(Guid productId)
+        {
+            var product = await productService.GetProductByProductId(productId);
+            if (product == null) return NotFound();
+            return Ok(product);
+        }
+
     }
 }
